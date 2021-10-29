@@ -14,8 +14,10 @@ class Student
 	public Student(int enr,int mk,String gen,String nm,int a)
 	{
 		
-		System.out.print("\n\tEnroll No. : "+enr);
-		System.out.println("Name : "+nm);
+		enrNo[a] = enr;
+		name[a] = nm;
+		gender[a] = gen;
+		mark[a] = mk;
 	}
 	public void display(int a)
 	{
