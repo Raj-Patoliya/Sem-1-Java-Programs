@@ -1,0 +1,39 @@
+/*
+Create a class “Rectangle” that would contain length and width as an instance variableand count as a static variable.Define constructors [constructor overloading (default, parameterized and copy)]to initialize variables of objects. Define methods to find area and to display variables’value of objects which are created.[Note: define initializer block, static initializer block and the static variable and method.Also demonstrate the sequence of execution of initializer block and static initializeblock]
+*/
+class Rectangle
+{
+	private int height,width,length;
+	public Rectangle()
+	{
+		this(0,0);	
+	}
+	public Rectangle(int w,int l)
+	{
+	
+		width = w ;
+		length = l;
+	}
+	public Rectangle(Rectangle rect)
+	{
+		
+		width = rect.width ;
+		length = rect.length;
+	}
+	int calculatedValue()
+	{	
+		return width * length ;	
+	}
+}
+public class Area
+{
+	public static void main(String args[])
+	{
+		Rectangle a = new Rectangle(2,3);
+		Rectangle aa = new Rectangle(a);
+		System.out.print("\n\t	"+a.calculatedValue()+"\n");
+		System.out.print("\n\t"+aa.calculatedValue()+"\n");
+		Rectangle a1 = new Rectangle(4,6);
+		System.out.print("\n\t"+a1.calculatedValue()+"\n");
+	}
+}
