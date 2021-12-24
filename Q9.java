@@ -1,8 +1,8 @@
 import java.util.*;
-class Account
+abstract class Account
 {
 	private int ano;
-	private int balance;
+	protected int balance;
 	{
 		balance = 0;	
 	}
@@ -18,27 +18,72 @@ class Account
 	public void deposit(int deposit)
 	{
 		balance = balance + deposit;	
+	}
+	public int withdraw(int withdraw)
+	{
+		balance = balance-withdraw;
+		return balance; 
+	}
+	public void display()
+	{
+		System.out.print("\n\t Account No : "+ano);
+		System.out.print("\n\t Account Balance : "+checkBal());
 	}			                                  	
 }
 class Saving extends Account
 {
-	public Saving(int ano,int balance)
+	private int roi;
+	private int ano;
+	public Saving(int ano,int balance,int roi)
 	{
 		super(ano,balance);
-	}	
+		this.ano = ano;
+		this.roi = roi;
+	}
+	public void display()
+	{
+		super.display();
+		System.out.print("\n\t Rate of Intrest : "+roi+"\n");
+	}
+	
 }
 class Current extends Account
 {
-	public Current(int ano,int balance)
+	private int odl;
+	private int ano;
+	private int withdraw;
+	private int usedodl,remainingodl;
+	public Current(int ano,int balance,int odl)
 	{
 		super(ano,balance);
+		this.ano = ano;
+		this.odl = odl;
+	}	
+	public void withdraw(int withdraw)
+	{
+		if(withdraw > checkBal())
+		{
+			balance = balance + odl;
+			super.withdraw();
+		}
+		else
+		{
+			super.withdraw();
+		}
+	}
+	public void display()
+	{
+		super.display();
+		System.out.print("\n\t Over draft Limit : "+odl+"\n");
+		System.out.print("\n\t Used over Draft Limit : "+usedodl+"\n");
+		System.out.print("\n\t RemainnOver draft Limit : "+remainingodl+"\n");
 	}
 }
 class Q9
 {
 	public static void main(String args[])
 	{
-		int ch;
+		int ch,accountno=10101,roi = 6,odl = 50000;
 		String acctype;
 		int temp=1;
 		Scanner sc = new Scanner(System.in);
@@ -71,11 +116,11 @@ class Q9
 		Account obj=null;
 		if(temp == 1)
 		{
-			obj = new Saving(10101,balance);
+			obj = new Saving(accountno,balance,roi);
 		}
 		if(temp == 2)
 		{
-			obj = new Current(10101,balance); 
+			obj = new Current(accountno,balance,odl); 
 		}
 		do{
 			System.out.print("\n\t1.Deposit.");
@@ -87,17 +132,56 @@ class Q9
 			ch = Integer.parseInt(sc.nextLine());
 			switch(ch)
 			{
-				case 1 :
-					System.out.print("\n\t Please Enter the amount to deposit : ");
-					int deposit = Integer.parseInt(sc.nextLine());
-					obj.deposit(deposit);
-					System.out.print("\n\t  Amount deposited successfully\n\tyour closing balance is "+obj.checkBal());
+				case 1 :	
+						int deposit;		
+						System.out.print("\n\t Please Enter the amount to deposit : ");
+						deposit = Integer.parseInt(sc.nextLine());
+						if(deposit < 0)
+						{
+							System.out.printf("\n\t Negative amount can't be deposited");
+							break;
+						}
+						else
+						{
+							obj.deposit(deposit);
+							System.out.print("\n\t  Amount deposited successfully\n\tyour closing balance is "+obj.checkBal());
+						}
 					break;
 				case 2 :
+						int withdraw;		
+						System.out.print("\n\t Please Enter the amount to deposit : ");
+						withdraw = Integer.parseInt(sc.nextLine());
+						if(acctype == "Saving")
+						{						
+							if(withdraw > obj.checkBal())
+							{
+								System.out.printf("\n\t Incefficient Balance for withdraw");
+								break;
+							}
+							else
+							{
+								obj.withdraw(withdraw);
+								System.out.print("\n\t  Amount Withdraw successfully\n\tyour closing balance is "+obj.checkBal());
+							}
+						}
+						else
+						{					
+							if(withdraw > (obj.checkBal()+odl))
+							{
+								System.out.printf("\n\t Incefficient Balance for withdraw");
+							}
+							else
+							{
+						
+							}		
+						}
 					break;
 				case 3 :
+						System.out.print("\n\t Balance of "+accountno+"  is "+obj.checkBal());
 					break;
 				case 4 :
+						System.out.print("\n\t Accont Holder Name : "+name);
+						obj.display();
 					break;
 				case 0 :
 					break;
