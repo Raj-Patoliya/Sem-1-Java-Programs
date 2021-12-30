@@ -59,16 +59,18 @@ class Current extends Account
 		this.ano = ano;
 		this.odl = odl;
 	}	
-	public void withdraw(int withdraw)
+	public int withdraw(int withdraw)
 	{
 		if(withdraw > checkBal())
 		{
 			balance = balance + odl;
-			super.withdraw();
+			super.withdraw(balance);
+			return super.checkBal();
 		}
 		else
 		{
-			super.withdraw();
+			super.withdraw(withdraw);
+			return super.checkBal();
 		}
 	}
 	public void display()
@@ -76,7 +78,7 @@ class Current extends Account
 		super.display();
 		System.out.print("\n\t Over draft Limit : "+odl+"\n");
 		System.out.print("\n\t Used over Draft Limit : "+usedodl+"\n");
-		System.out.print("\n\t RemainnOver draft Limit : "+remainingodl+"\n");
+		System.out.print("\n\t Remaining over draft Limit : "+remainingodl+"\n");
 	}
 }
 class Q9
@@ -172,7 +174,7 @@ class Q9
 							}
 							else
 							{
-						
+								obj.withdraw(withdraw);
 							}		
 						}
 					break;
